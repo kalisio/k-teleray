@@ -24,7 +24,10 @@
     "url": "https://github.com/kalisio/k-teleray/issues"
   },
   "scripts": {
-    "test": "echo \"Warning: no test specified\""
+    "test": "echo \"Warning: no test specified\"",
+    "release:patch": "npm version --no-git-tag-version --force patch",
+    "release:minor": "npm version --no-git-tag-version --force minor",
+    "release:major": "npm version --no-git-tag-version --force major"
   },
   "dependencies": {},
   "devDependencies": {}

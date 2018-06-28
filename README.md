@@ -1,6 +1,6 @@
 # k-teleray
 
-A [Krawler](https://kalisio.github.io/krawler/) based service to download data from the french gamma dose rate alert network [TELERAY](http://teleray.irsn.fr/aide.htm)
+A [Krawler](https://kalisio.github.io/krawler/) based service to download data from the French gamma dose rate alert network [TELERAY](http://teleray.irsn.fr/aide.htm)
 
 ## Getting started
 
@@ -20,7 +20,9 @@ We use [SemVer](https://semver.org/) for versioning. For the versions available,
 
 ## Authors
 
-This project is sponsored by ![Kalisio](https://s3.eu-central-1.amazonaws.com/kalisioscope/kalisio/kalisio-logo-black-256x84.png)
+This project is sponsored by 
+
+![Kalisio](https://s3.eu-central-1.amazonaws.com/kalisioscope/kalisio/kalisio-logo-black-256x84.png)
 
 ## License
 

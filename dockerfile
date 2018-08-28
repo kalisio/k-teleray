@@ -12,5 +12,5 @@ RUN npm install -g @kalisio/krawler@0.5.2 --unsafe
 
 COPY jobfile.js .
 
-CMD krawler --cron "* */10 * * * *" jobfile.js
+CMD krawler --cron "0 */10 * * * *" jobfile.js
 

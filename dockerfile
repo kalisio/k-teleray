@@ -11,7 +11,7 @@ ENV NODE_PATH=/krawler/node_modules
 
 COPY jobfile.js .
 
-HEALTHCHECK --interval=1m --timeout=10s --start-period=1m CMD node ./healthcheck.js
+HEALTHCHECK --interval=1m --timeout=10s --start-period=1m CMD node ./krawler/healthcheck.js
 
 CMD node ./krawler --cron "0 */10 * * * *" jobfile.js
 

@@ -2,15 +2,16 @@ FROM  node:8
 
 MAINTAINER Kalisio <contact@kalisio.xyz>
 
-ENV DEBUG=
+ARG KRAWLER_BRANCH
+ENV KRAWLER_BRANCH=$KRAWLER_BRANCH
 
-RUN mkdir /home/node/.npm-global
-ENV PATH=/home/node/.npm-global/bin:$PATH
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-
-RUN npm install -g @kalisio/krawler@0.5.2 --unsafe
+RUN git clone https://github.com/kalisio/krawler.git -b $KRAWLER_BRANCH --single-branch && cd krawler && yarn install && yarn link && cd ..
+RUN yarn link @kalisio/krawler
+ENV NODE_PATH=/krawler/node_modules
 
 COPY jobfile.js .
 
-CMD krawler --cron "0 */10 * * * *" jobfile.js
+HEALTHCHECK --interval=1m --timeout=10s --start-period=1m CMD node ./healthcheck.js
+
+CMD node ./krawler --cron "0 */10 * * * *" jobfile.js
 

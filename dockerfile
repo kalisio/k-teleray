@@ -9,6 +9,8 @@ RUN git clone https://github.com/kalisio/krawler.git -b $KRAWLER_BRANCH --single
 RUN yarn link @kalisio/krawler
 ENV NODE_PATH=/krawler/node_modules
 
+# Install Teleray
+COPY config.js .
 COPY jobfile.js .
 
 HEALTHCHECK --interval=1m --timeout=10s --start-period=1m CMD node ./krawler/healthcheck.js

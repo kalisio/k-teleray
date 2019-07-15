@@ -66,9 +66,7 @@ module.exports = {
             [{ time: 1 }, { expireAfterSeconds: config.expirationPeriod }], // days in s
             { geometry: '2dsphere' }                                                                                                              
           ],
-        },
-        generateTasks: {
-		}
+        }
       },
       after: {
         disconnectMongo: {

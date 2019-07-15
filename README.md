@@ -1,5 +1,7 @@
 # k-teleray
 
+[![Build Status](https://travis-ci.org/kalisio/k-teleray.png?branch=master)](https://travis-ci.org/kalisio/k-teleray)
+
 A [Krawler](https://kalisio.github.io/krawler/) based service to download data from the French gamma dose rate alert network [TELERAY](http://teleray.irsn.fr/aide.htm)
 
 ## Getting started

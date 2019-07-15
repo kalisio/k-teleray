@@ -12,8 +12,4 @@ notifications:
     on_success: always
     on_failure: always
 script:
-- export VERSION=$(node -p -e "require('./package.json').version")
-- docker build -t kalisio/k-teleray .
-- docker tag kalisio/k-teleray kalisio/k-teleray:$VERSION
-- docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
-- docker push kalisio/k-teleray:$VERSION
+- bash .travis.build.sh

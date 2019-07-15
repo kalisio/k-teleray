@@ -1,11 +1,12 @@
-const path = require('path')
-const fs = require('fs')
+const config = require('./config')
+
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/teleray'
 
 module.exports = {
   id: 'teleray',
   store: 'memory',
   options: {
-    //workersLimit: 1
+    workersLimit: 1
   },
   tasks: [{
     id: 'teleray',
@@ -28,13 +29,18 @@ module.exports = {
           store: 'fs'
         },
         */
-        writeJsonS3: {
-          hook: 'writeJson',
-          store: 's3',
-          storageOptions: {
-            ACL: 'public-read'
+        writeMongoCollection: {
+		      faultTolerant: true,
+          chunkSize: 256,
+          collection: 'teleray',
+          transform: {
+            transformPath: 'features',
+            mapping: { 'properties.measureDate': 'time' },
+            omit: [ 'properties.location' ],
+            unitMapping: { time: { asDate: 'utc' } } 
           }
-        }
+        },
+        clearData: {}
       }
     },
     jobs: {
@@ -44,21 +50,31 @@ module.exports = {
         }, {
           id: 'fs',
           options: {
-            path: path.join(__dirname, '..', 'output')
+            path: __dirname
           }
-        }, {
-          id: 's3',
-          options: {
-            client: {
-              accessKeyId: process.env.S3_ACCESS_KEY,
-              secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
-            },
-            bucket: process.env.S3_BUCKET
-          }
-        }]
+        }],
+        connectMongo: {
+          url: dbUrl,
+          // Required so that client is forwarded from job to tasks
+          clientPath: 'taskTemplate.client'
+        },
+        createMongoCollection: {
+          clientPath: 'taskTemplate.client',
+          collection: 'teleray',
+          indices: [
+            [{ time: 1, 'properties.irsnId': 1 }, { unique: true }],
+            [{ time: 1 }, { expireAfterSeconds: config.expirationPeriod }], // days in s
+            { geometry: '2dsphere' }                                                                                                              
+          ],
+        },
+        generateTasks: {
+		}
       },
       after: {
-        removeStores: ['memory', 'fs', 's3']
+        disconnectMongo: {
+          clientPath: 'taskTemplate.client'
+        },
+        removeStores: ['memory', 'fs']
       }
     }
   }

@@ -1,7 +1,6 @@
 ARG KRAWLER_TAG
 FROM kalisio/krawler:${KRAWLER_TAG} AS Krawler
 
-
 FROM node:8-buster-slim
 LABEL maintainer="Kalisio <contact@kalisio.xyz>"
 

@@ -1,11 +1,12 @@
+ARG KRAWLER_TAG
+FROM kalisio/krawler:${KRAWLER_TAG} AS Krawler
+
+
 FROM node:8-buster-slim
 LABEL maintainer="Kalisio <contact@kalisio.xyz>"
 
-# Arguments
-ARG KRAWLER_TAG=latest
-
 # Copy Krawler
-COPY --from=kalisio/krawler:latest /opt/krawler /opt/krawler
+COPY --from=Krawler /opt/krawler /opt/krawler
 RUN echo ${KRAWLER_TAG} && cd /opt/krawler && yarn link && yarn link @kalisio/krawler
 
 # Install the job

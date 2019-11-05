@@ -5,8 +5,8 @@ LABEL maintainer="Kalisio <contact@kalisio.xyz>"
 ARG KRAWLER_TAG=latest
 
 # Copy Krawler
-COPY --from=kalisio/krawler:${KRAWLER_TAG} /opt/krawler /opt/krawler
-RUN cd /opt/krawler && yarn link && yarn link @kalisio/krawler
+COPY --from=kalisio/krawler:latest /opt/krawler /opt/krawler
+RUN echo ${KRAWLER_TAG} && cd /opt/krawler && yarn link && yarn link @kalisio/krawler
 
 # Install the job
 COPY config.js .

@@ -3,6 +3,7 @@ LABEL maintainer="Kalisio <contact@kalisio.xyz>"
 
 # Arguments
 ARG KRAWLER_TAG=latest
+ENV KRAWLER_TAG=${KRAWLER_TAG}
 
 # Copy Krawler
 COPY --from=kalisio/krawler:${KRAWLER_TAG} /opt/krawler /opt/krawler

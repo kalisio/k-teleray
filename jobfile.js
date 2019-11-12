@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 const config = require('./config')
 
 const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/teleray'
@@ -17,11 +19,40 @@ module.exports = {
   }],
   hooks: {
     tasks: {
+      before: {
+        createMongoAggregation: {
+          dataPath: 'data.mostRecentMeasures',
+          pipeline: [
+            { $sort: { 'properties.irsnId': 1, time: 1 } },
+            {
+              $group:
+                {
+                  _id: "$properties.irsnId",
+                  lastMeasureDate: { $last: "$time" }
+                }
+            }
+          ]
+        }
+      },
       after: {
         readJson: {},
         convertToGeoJson: {
           latitude: 'location.lat',
           longitude: 'location.lon'
+        },
+        apply: {
+          function: (item) => {
+            let features = []
+            _.forEach(item.data.features, (feature) => {
+              let existingMeasure = _.find(item.mostRecentMeasures, (measure) => {
+                const lastMeasureDate = measure.lastMeasureDate.getTime()
+                return measure._id === feature.properties.irsnId && lastMeasureDate === feature.properties.measureDate
+              })
+              if (existingMeasure === undefined) features.push(feature)
+            })
+            console.log('Found ' + features.length + ' new measures')
+            item.data = features
+          }
         },
         /* For DEBUG purpose
         writeJsonFS: {
@@ -30,11 +61,9 @@ module.exports = {
         },
         */
         writeMongoCollection: {
-		      faultTolerant: true,
           chunkSize: 256,
           collection: 'teleray',
           transform: {
-            transformPath: 'features',
             mapping: { 'properties.measureDate': 'time' },
             omit: [ 'properties.location' ],
             unitMapping: { time: { asDate: 'utc' } } 

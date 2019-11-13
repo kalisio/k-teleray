@@ -1,17 +1,15 @@
 #!/bin/bash
 
 # Define image name
-REPO_SLUG="$TRAVIS_REPO_SLUG"
-REPO_NAME=${REPO_SLUG#*/}
-IMAGE_NAME=docker.pkg.github.com/$REPO_SLUG/$REPO_NAME
+IMAGE_NAME="$TRAVIS_REPO_SLUG"
 
 # Define image tag
 # Use version number only on release
 if [[ -z "$TRAVIS_TAG" ]]
 then
-	export TAG=latest
+	export IMAGE_TAG=latest
 	export KRAWLER_TAG=latest
 else
-	export TAG=$(node -p -e "require('./package.json').version")
+	export IMAGE_TAG=$(node -p -e "require('./package.json').version")
 	export KRAWLER_TAG=v$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
 fi

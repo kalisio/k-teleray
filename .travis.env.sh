@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# Build docker with version number only on release
+# Define image name
+REPO_SLUG="$TRAVIS_REPO_SLUG"
+REPO_NAME=${REPO_SLUG#*/}
+IMAGE_NAME=docker.pkg.github.com/$REPO_SLUG/$REPO_NAME
+
+# Define image tag
+# Use version number only on release
 if [[ -z "$TRAVIS_TAG" ]]
 then
 	export TAG=latest

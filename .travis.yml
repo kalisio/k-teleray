@@ -33,3 +33,6 @@ before_deploy:
 deploy:
   provider: script
   script: docker push $IMAGE_NAME:$IMAGE_TAG
+  on:
+    tags: true
+    all_branches: true

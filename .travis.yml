@@ -15,7 +15,7 @@ notifications:
     on_failure: always  
 
 script:
-  - |
+  - >
     if [[ -z "$TRAVIS_TAG" ]]; then
 	    IMAGE_TAG=latest
 	    KRAWLER_TAG=latest

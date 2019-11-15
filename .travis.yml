@@ -23,4 +23,4 @@ script:
 	    IMAGE_TAG=$(node -p -e "require('./package.json').version")
 	    KRAWLER_TAG=v$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
     fi
-    docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t "$TRAVIS_REPO_SLUG":$IMAGE_TAG .
+  - docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t "$TRAVIS_REPO_SLUG":$IMAGE_TAG .

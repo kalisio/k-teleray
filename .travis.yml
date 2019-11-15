@@ -17,8 +17,12 @@ notifications:
 script:
   - |
    IMAGE_NAME="$TRAVIS_REPO_SLUG"
+   if [[ -z "$TRAVIS_TAG" ]]; then
+     IMAGE_TAG=latest
+     KRAWLER_TAG=latest
+   fi
    docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
-   
+
 #  if [ -z "$TRAVIS_TAG" ]; then
 #    IMAGE_TAG=latest;
 #    KRAWLER_TAG=latest;

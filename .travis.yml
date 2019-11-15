@@ -15,13 +15,12 @@ notifications:
     on_failure: always  
 
 script:
-- |
-  if [[ -z "$TRAVIS_TAG" ]]
-  then
-	  IMAGE_TAG=latest
-	  KRAWLER_TAG=latest
-  else
-	  IMAGE_TAG=$(node -p -e "require('./package.json').version")
-	  KRAWLER_TAG=v$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
-  fi
-- docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t "$TRAVIS_REPO_SLUG":$IMAGE_TAG .
+  - |
+    if [[ -z "$TRAVIS_TAG" ]]; then
+	    IMAGE_TAG=latest
+	    KRAWLER_TAG=latest
+    else
+	    IMAGE_TAG=$(node -p -e "require('./package.json').version")
+	    KRAWLER_TAG=v$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
+    fi
+    docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t "$TRAVIS_REPO_SLUG":$IMAGE_TAG .

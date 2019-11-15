@@ -15,4 +15,22 @@ notifications:
     on_failure: always  
 
 script:
-- bash .travis.build.sh
+  - |
+   IMAGE_NAME="$TRAVIS_REPO_SLUG"
+   if [[ -z "$TRAVIS_TAG" ]]; then
+     IMAGE_TAG=latest
+     KRAWLER_TAG=latest
+   else
+     IMAGE_TAG=$(node -p -e "require('./package.json').version")
+     KRAWLER_TAG=v$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
+   fi
+   docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
+
+before_deploy:
+  - docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
+
+deploy:
+  provider: script
+  script: docker push $IMAGE_NAME:$IMAGE_TAG
+  on:
+    all_branches: true

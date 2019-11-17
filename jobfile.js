@@ -31,7 +31,8 @@ module.exports = {
                   lastMeasureDate: { $last: "$time" }
                 }
             }
-          ]
+          ],
+          allowDiskUse: true
         }
       },
       after: {

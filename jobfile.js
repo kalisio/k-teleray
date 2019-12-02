@@ -54,9 +54,20 @@ module.exports = {
             item.data = features
           }
         },
-        writeMongoCollection: {
+        writeSensors: {
+          hook: 'writeMongoCollection',
           chunkSize: 256,
-          collection: 'teleray',
+          ordered : false,
+          faultTolerant: true,
+          collection: 'teleray-sensors',
+          transform: {
+            omit: [ 'properties.measureDate', 'properties.measureDateFormatted', 'properties.value', 'properties.average', 'properties.cleanMeasure' ]
+          }
+        },
+        writeMeasures: {
+          hook: 'writeMongoCollection',
+          chunkSize: 256,
+          collection: 'teleray-measures',
           transform: {
             mapping: { 'properties.measureDate': 'time' },
             omit: [ 'properties.location' ],
@@ -74,9 +85,19 @@ module.exports = {
           // Required so that client is forwarded from job to tasks
           clientPath: 'taskTemplate.client'
         },
-        createMongoCollection: {
+        createSensorsCollection: {
+          hook: 'createMongoCollection',
           clientPath: 'taskTemplate.client',
-          collection: 'teleray',
+          collection: 'teleray-sensors',
+          indices: [
+            [{ 'properties.irsnId': 1 }, { unique: true }],
+            { geometry: '2dsphere' }                                                                                                              
+          ],
+        },
+        createMeasuresCollection: {
+          hook: 'createMongoCollection',
+          clientPath: 'taskTemplate.client',
+          collection: 'teleray-measures',
           indices: [
             [{ time: 1, 'properties.irsnId': 1 }, { unique: true }],
             [{ time: 1 }, { expireAfterSeconds: ttl }], // days in s
@@ -85,6 +106,12 @@ module.exports = {
         }
       },
       after: {
+        disconnectMongo: {
+          clientPath: 'taskTemplate.client'
+        },
+        removeStores: ['memory']
+      },
+      error: {
         disconnectMongo: {
           clientPath: 'taskTemplate.client'
         },

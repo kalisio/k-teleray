@@ -4,13 +4,21 @@
 
 A [Krawler](https://kalisio.github.io/krawler/) based service to download data from the French gamma dose rate alert network [TELERAY](http://teleray.irsn.fr/aide.htm)
 
-## Getting started
 
+## Description
+
+-TODO-
+
+## Configuration
+
+| Variable | Description |
+|--- | --- |
+| `DB_URL` | The database URL. The default value is `mongodb://127.0.0.1:27017/hubeau` |
+| `TTL` | The observations data time to live. It must be expressed in seconds and the default value is `604 800` (7 days) | 
 
 ## Deployment
 
-- DOCKER_HUB_LOGIN
-- DOCKER_HUB_PASSWORD
+-TODO-
 
 ## Contributing
 

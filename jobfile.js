@@ -1,8 +1,7 @@
 const _ = require('lodash')
 
-const config = require('./config')
-
 const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/teleray'
+const ttl = process.env.TTL || (7 * 24 * 60 * 60)  // duration in seconds
 
 module.exports = {
   id: 'teleray',
@@ -55,12 +54,6 @@ module.exports = {
             item.data = features
           }
         },
-        /* For DEBUG purpose
-        writeJsonFS: {
-          hook: 'writeJson',
-          store: 'fs'
-        },
-        */
         writeMongoCollection: {
           chunkSize: 256,
           collection: 'teleray',
@@ -75,14 +68,7 @@ module.exports = {
     },
     jobs: {
       before: {
-        createStores: [{
-          id: 'memory'
-        }, {
-          id: 'fs',
-          options: {
-            path: __dirname
-          }
-        }],
+        createStores: [{ id: 'memory' }],
         connectMongo: {
           url: dbUrl,
           // Required so that client is forwarded from job to tasks
@@ -93,7 +79,7 @@ module.exports = {
           collection: 'teleray',
           indices: [
             [{ time: 1, 'properties.irsnId': 1 }, { unique: true }],
-            [{ time: 1 }, { expireAfterSeconds: config.expirationPeriod }], // days in s
+            [{ time: 1 }, { expireAfterSeconds: ttl }], // days in s
             { geometry: '2dsphere' }                                                                                                              
           ],
         }
@@ -102,7 +88,7 @@ module.exports = {
         disconnectMongo: {
           clientPath: 'taskTemplate.client'
         },
-        removeStores: ['memory', 'fs']
+        removeStores: ['memory']
       }
     }
   }

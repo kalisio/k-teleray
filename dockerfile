@@ -16,7 +16,6 @@ COPY --from=Krawler /opt/krawler /opt/krawler
 RUN cd /opt/krawler && yarn link && yarn link @kalisio/krawler
 
 # Install the job
-COPY config.js .
 COPY jobfile.js .
 
 # Add default healthcheck

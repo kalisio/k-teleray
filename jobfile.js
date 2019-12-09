@@ -68,7 +68,7 @@ module.exports = {
         writeSensors: {
           hook: 'updateMongoCollection',
           collection: 'teleray-sensors',
-          filter: { 'properties.irsnId': '<% properties.irsnId %>' },
+          filter: { 'properties.irsnId': '<%= properties.irsnId %>' },
           upsert : true,
           transform: {
             omit: [ 
@@ -81,8 +81,7 @@ module.exports = {
               'properties.libelle',
               'properties.validation' ]
           },
-          chunkSize: 256,
-          faultTolerant: true
+          chunkSize: 256
         },
         clearData: {}
       }

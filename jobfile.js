@@ -20,7 +20,8 @@ module.exports = {
     tasks: {
       before: {
         createMongoAggregation: {
-          dataPath: 'data.mostRecentMeasures',
+          dataPath: 'data.mostRecentMeasurement',
+          collection: 'teleray-measurements',
           pipeline: [
             { $sort: { 'properties.irsnId': 1, time: 1 } },
             {
@@ -42,37 +43,46 @@ module.exports = {
         },
         apply: {
           function: (item) => {
-            let features = []
+            let measurements = []
             _.forEach(item.data.features, (feature) => {
-              let existingMeasure = _.find(item.mostRecentMeasures, (measure) => {
-                const lastMeasureDate = measure.lastMeasureDate.getTime()
-                return measure._id === feature.properties.irsnId && lastMeasureDate === feature.properties.measureDate
+              let existingMeasure = _.find(item.mostRecentMeasurement, (measure) => {
+                const lastMeasurementDate = measure.lastMeasureDate.getTime()
+                return measure._id === feature.properties.irsnId && lastMeasurementDate === feature.properties.measureDate
               })
-              if (existingMeasure === undefined) features.push(feature)
+              if (existingMeasure === undefined) measurements.push(feature)
             })
-            console.log('Found ' + features.length + ' new measures')
-            item.data = features
+            console.log('Found ' + measurements.length + ' new measurements')
+            item.data = measurements
           }
         },
-        writeSensors: {
+        writeMeasurements: {
           hook: 'writeMongoCollection',
-          chunkSize: 256,
-          ordered : false,
-          faultTolerant: true,
-          collection: 'teleray-sensors',
-          transform: {
-            omit: [ 'properties.measureDate', 'properties.measureDateFormatted', 'properties.value', 'properties.average', 'properties.cleanMeasure' ]
-          }
-        },
-        writeMeasures: {
-          hook: 'writeMongoCollection',
-          chunkSize: 256,
-          collection: 'teleray-measures',
+          collection: 'teleray-measurements',
           transform: {
             mapping: { 'properties.measureDate': 'time' },
             omit: [ 'properties.location' ],
             unitMapping: { time: { asDate: 'utc' } } 
-          }
+          },
+          chunkSize: 256
+        },
+        writeSensors: {
+          hook: 'updateMongoCollection',
+          collection: 'teleray-sensors',
+          filter: { 'properties.irsnId': '<% properties.irsnId %>' },
+          upsert : true,
+          transform: {
+            omit: [ 
+              'time',
+              'properties.measureDate',
+              'properties.measureDateFormatted', 
+              'properties.value', 
+              'properties.average', 
+              'properties.cleanMeasure',
+              'properties.libelle',
+              'properties.validation' ]
+          },
+          chunkSize: 256,
+          faultTolerant: true
         },
         clearData: {}
       }
@@ -94,10 +104,10 @@ module.exports = {
             { geometry: '2dsphere' }                                                                                                              
           ],
         },
-        createMeasuresCollection: {
+        createMeasurementsCollection: {
           hook: 'createMongoCollection',
           clientPath: 'taskTemplate.client',
-          collection: 'teleray-measures',
+          collection: 'teleray-measurements',
           indices: [
             [{ time: 1, 'properties.irsnId': 1 }, { unique: true }],
             [{ time: 1 }, { expireAfterSeconds: ttl }], // days in s

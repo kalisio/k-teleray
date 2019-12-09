@@ -15,6 +15,7 @@ A [Krawler](https://kalisio.github.io/krawler/) based service to download data f
 |--- | --- |
 | `DB_URL` | The database URL. The default value is `mongodb://127.0.0.1:27017/hubeau` |
 | `TTL` | The observations data time to live. It must be expressed in seconds and the default value is `604 800` (7 days) | 
+| `DEBUG` | Enables debug output. Set it to `krawler*` to enable full output. By default it is undefined. |
 
 ## Deployment
 

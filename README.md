@@ -17,7 +17,7 @@ By default, the job is executed every 10 minutes.
 
 | Variable | Description |
 |--- | --- |
-| `DB_URL` | The mongoDB URL. The default value is `mongodb://127.0.0.1:27017/hubeau` |
+| `DB_URL` | The mongoDB database URL. The default value is `mongodb://127.0.0.1:27017/teleray` |
 | `TTL` | The observations data time to live. It must be expressed in seconds and the default value is `604 800` (7 days) | 
 | `DEBUG` | Enables debug output. Set it to `krawler*` to enable full output. By default it is undefined. |
 
@@ -27,7 +27,7 @@ We personally use [Kargo](https://kalisio.github.io/kargo/) to deploy the servic
 
 ## Contributing
 
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
+Please refer to [contribution section](./CONTRIBUTING.md) for more details.
 
 ## Authors
 

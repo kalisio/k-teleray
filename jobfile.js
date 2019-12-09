@@ -65,7 +65,7 @@ module.exports = {
           },
           chunkSize: 256
         },
-        writeSensors: {
+        updateSensors: {
           hook: 'updateMongoCollection',
           collection: 'teleray-sensors',
           filter: { 'properties.irsnId': '<%= properties.irsnId %>' },

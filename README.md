@@ -1,6 +1,6 @@
 # k-teleray
 
-[![Latest Release](https://img.shields.io/github/v/tag/kalisio/k-teleray?sort=semver&label=latest)](https://github.com/github/release/latest)
+[![Latest Release](https://img.shields.io/github/v/tag/kalisio/k-teleray?sort=semver&label=latest)](https://github.com/kalisio/k-teleray/releases)
 [![Build Status](https://travis-ci.org/kalisio/k-teleray.png?branch=master)](https://travis-ci.org/kalisio/k-teleray)
 
 A [Krawler](https://kalisio.github.io/krawler/) based service to download data from the French gamma dose rate alert [Teleray](http://teleray.irsn.fr/aide.htm) network.

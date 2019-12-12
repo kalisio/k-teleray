@@ -1,5 +1,6 @@
 # k-teleray
 
+[![Latest Release](https://img.shields.io/github/v/tag/kalisio/k-teleray?sort=semver&label=latest)](https://github.com/github/release/latest)
 [![Build Status](https://travis-ci.org/kalisio/k-teleray.png?branch=master)](https://travis-ci.org/kalisio/k-teleray)
 
 A [Krawler](https://kalisio.github.io/krawler/) based service to download data from the French gamma dose rate alert [Teleray](http://teleray.irsn.fr/aide.htm) network.
@@ -10,7 +11,7 @@ The **k-teleray** job allow to scrape gamma dose rate measurements from the foll
 * the `measurements` collection stores the measurement data 
 * the `sensors` collection stores the sensor positions
 
-All records are stored in [GeoJson](https://fr.wikipedia.org/wiki/GeoJSON) format
+All records are stored in [GeoJson](https://fr.wikipedia.org/wiki/GeoJSON) format.
 
 By default, the job is executed every 10 minutes.
 

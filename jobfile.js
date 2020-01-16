@@ -13,7 +13,7 @@ module.exports = {
     id: 'teleray',
     type: 'http',
     options: {
-      url: 'http://teleray.irsn.fr//TelerayService/service/measure'
+      url: 'http://teleray.irsn.fr/TelerayService/service/measure'
     }
   }],
   hooks: {

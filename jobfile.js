@@ -109,6 +109,8 @@ module.exports = {
           collection: 'teleray-measurements',
           indices: [
             [{ time: 1, 'properties.irsnId': 1 }, { unique: true }],
+            { 'properties.value': 1 },
+            { 'properties.irsnId': 1, 'properties.value': 1, time: -1 },
             [{ time: 1 }, { expireAfterSeconds: ttl }], // days in s
             { geometry: '2dsphere' }                                                                                                              
           ],

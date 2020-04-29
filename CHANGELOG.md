@@ -7,7 +7,7 @@
 
 ##### Bug Fixes
 
-*  force ttl env value to be a number ([73d8c2ac](https://github.com/kalisio/k-teleray/commit/73d8c2ac054faa440530a4b309c07c51eb3b8c2c))
+*  force ttl environment value to be a number ([73d8c2ac](https://github.com/kalisio/k-teleray/commit/73d8c2ac054faa440530a4b309c07c51eb3b8c2c))
 
 ## 1.0.0 (2019-12-12)
 
@@ -45,5 +45,3 @@
 ##### Bug Fixes
 
 *  container build ([064343d8](https://github.com/kalisio/k-teleray/commit/064343d8dca30911f8a56aceba0bc6c76c9744b8))
-
-

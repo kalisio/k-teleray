@@ -1,3 +1,13 @@
+### 1.1.0 (2020-04-29)
+
+##### New Features
+
+*  Upgrade to Node12 (close [#11](https://github.com/kalisio/k-teleray/pull/11)) wip: Enhance MogoDB indexes [#10](https://github.com/kalisio/k-teleray/pull/10) ([2b0bc0d8](https://github.com/kalisio/k-teleray/commit/2b0bc0d8197677c3d74eb27884d63ba6abae823f))
+
+##### Other Changes
+
+*  force ttl env value to be a number ([73d8c2ac](https://github.com/kalisio/k-teleray/commit/73d8c2ac054faa440530a4b309c07c51eb3b8c2c))
+
 ## 1.0.0 (2019-12-12)
 
 ##### New Features

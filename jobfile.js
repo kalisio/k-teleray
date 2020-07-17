@@ -101,7 +101,7 @@ module.exports = {
           indices: [
             [{ 'properties.irsnId': 1 }, { unique: true }],
             { geometry: '2dsphere' }                                                                                                              
-          ],
+          ]
         },
         createMeasurementsCollection: {
           hook: 'createMongoCollection',

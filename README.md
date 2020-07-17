@@ -13,7 +13,7 @@ The **k-teleray** job allow to scrape gamma dose rate measurements from the foll
 
 All records are stored in [GeoJson](https://fr.wikipedia.org/wiki/GeoJSON) format.
 
-By default, the job is executed every 10 minutes.
+The job is executed according a specific cron expression. By default, every 10 minutes.
 
 ## Configuration
 

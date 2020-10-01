@@ -1,3 +1,9 @@
+### 1.2.0 (2020-10-01)
+
+##### New Features
+
+*  Allow to configure the cron expression (close [#12](https://github.com/kalisio/k-teleray/pull/12)) ([585ba9da](https://github.com/kalisio/k-teleray/commit/585ba9dace101ffd1bc5301646ad88cb323ffee6))
+
 ### 1.1.0 (2020-04-29)
 
 ##### New Features

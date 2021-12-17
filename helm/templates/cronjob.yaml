@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: teleray
+  labels:
+    jobs.service: teleray
+spec:
+  schedule: "{{ .Values.job.cron }}"
+  jobTemplate:
+    spec:
+      template:
+        containers:
+        - name: teleray
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: DB_URL
+              value: "{{ .Values.job.dbUrl }}"
+            - name: TTL
+              value: "{{ .Values.job.ttl }}"
+            - name: DEBUG
+              value: "{{ .Values.job.debug }}"
+          livenessProbe:
+            exec:
+              command:
+                - node
+                - /opt/krawler/healthcheck.js
+                - --message-template
+                - |-
+                  *<%= SUBDOMAIN %>*
+                  Krawler job *<%= jobId %>*: <%= error.message %>
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 10
+          resources: {}
+      restartPolicy: OnFailure

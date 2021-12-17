@@ -1,9 +1,3 @@
-language: node_js
-node_js:
-  - '12'
-services:
-  - docker
-
 notifications:
   email: false
   slack:
@@ -12,23 +6,39 @@ notifications:
     on_success: always
     on_failure: always  
 
-script:
-  - |
-   IMAGE_NAME="$TRAVIS_REPO_SLUG"
-   if [[ -z "$TRAVIS_TAG" ]]; then
-     IMAGE_TAG=latest
-     KRAWLER_TAG=latest
-   else
-     IMAGE_TAG=$(node -p -e "require('./package.json').version")
-     KRAWLER_TAG=$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
-   fi
-   docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
+stages:
+  - name: DOCKER
+  - name: HELM
+    if: commit_message =~ /(chart|helm)/
 
-before_script:
-  - docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
-
-deploy:
-  provider: script
-  script: docker push $IMAGE_NAME:$IMAGE_TAG
-  on:
-    all_branches: true
+jobs:
+  include:
+    - stage: DOCKER
+      language: node_js
+      node_js:
+      - '12'
+      services:
+      - docker
+      script:
+      - |
+        IMAGE_NAME="$TRAVIS_REPO_SLUG"
+        if [[ -z "$TRAVIS_TAG" ]]; then
+          IMAGE_TAG=latest
+          KRAWLER_TAG=latest
+        else
+          IMAGE_TAG=$(node -p -e "require('./package.json').version")
+          KRAWLER_TAG=$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
+        fi
+        docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
+        docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
+      deploy:
+        provider: script
+        script: docker push $IMAGE_NAME:$IMAGE_TAG
+        on:
+          all_branches: true
+    - stage: HELM
+      script:
+      - |
+        curl -L https://git.io/get_helm.sh | bash
+        helm init --client-only
+        helm package -u helm

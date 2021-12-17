@@ -1,0 +1,9 @@
+
+image:
+  repository: kalisio/k-teleray
+  tag: 1.2.0
+  pullPolicy: Always
+job:
+  dbUrl: "mongodb"
+  ttl: 2592000
+  cron: "*/10 * * * *"

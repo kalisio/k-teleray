@@ -1,37 +1,27 @@
-apiVersion: batch/v1
+apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: teleray
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
   labels:
-    jobs.service: teleray
+    job: teleray
 spec:
-  schedule: "{{ .Values.job.cron }}"
+  schedule: "{{ .Values.cron }}"
   jobTemplate:
     spec:
-      template:
-        containers:
-        - name: teleray
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: DB_URL
-              value: "{{ .Values.job.dbUrl }}"
-            - name: TTL
-              value: "{{ .Values.job.ttl }}"
-            - name: DEBUG
-              value: "{{ .Values.job.debug }}"
-          livenessProbe:
-            exec:
-              command:
-                - node
-                - /opt/krawler/healthcheck.js
-                - --message-template
-                - |-
-                  *<%= SUBDOMAIN %>*
-                  Krawler job *<%= jobId %>*: <%= error.message %>
-            failureThreshold: 3
-            initialDelaySeconds: 60
-            periodSeconds: 60
-            timeoutSeconds: 10
-          resources: {}
-      restartPolicy: OnFailure
+      template: 
+        spec:
+          containers:
+            - name: {{ .Chart.Name }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              env:
+                - name: DB_URL
+                  value: "{{ .Values.database.url }}/{{ .Values.database.name }}"
+                - name: TTL
+                  value: "{{ .Values.database.ttl }}" 
+                - name: CRON
+                  value: ""            
+                - name: DEBUG
+                  value: "{{ .Values.debug }}"
+          restartPolicy: OnFailure

@@ -1,9 +1,13 @@
-
 image:
   repository: kalisio/k-teleray
   tag: 1.2.0
   pullPolicy: Always
-job:
-  dbUrl: "mongodb"
+
+database:
+  name: "odk"
+  url: "mongodb://mongodb:27017"
   ttl: 2592000
-  cron: "*/10 * * * *"
+
+cron: "*/10 * * * *"
+  
+debug: ""

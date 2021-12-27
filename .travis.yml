@@ -22,7 +22,6 @@ jobs:
       script:
       - |
         IMAGE_NAME="$TRAVIS_REPO_SLUG"
-        echo $IMAGE_NAME
         if [[ -z "$TRAVIS_TAG" ]]; then
           IMAGE_TAG=latest
           KRAWLER_TAG=
@@ -31,6 +30,7 @@ jobs:
           KRAWLER_TAG=$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
         fi
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
+        echo <> Building $IMAGE_NAME:$IMAGE_TAG
         docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
       deploy:
         provider: script

@@ -31,7 +31,6 @@ jobs:
         fi
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
         docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
-        docker push $IMAGE_NAME:$IMAGE_TAG
       deploy:
         provider: script
         script: docker push $IMAGE_NAME:$IMAGE_TAG

@@ -32,14 +32,10 @@ jobs:
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
         echo <> Building image ${IMAGE_NAME}:${IMAGE_TAG} using kalisio/krawler:${KRAWLER_TAG}
         docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
-      deploy:
-        provider: script
-        script: docker push $IMAGE_NAME:$IMAGE_TAG
-        on:
-          all_branches: true
+        docker push $IMAGE_NAME:$IMAGE_TAG
 
     - stage: HELM
-      before_ibstall:
+      before_install:
         - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash   
       script:
       - |

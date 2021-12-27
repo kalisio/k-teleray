@@ -30,7 +30,7 @@ jobs:
           KRAWLER_TAG=$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
         fi
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
-        echo "<> Building image ${IMAGE_NAME}:${IMAGE_TAG} using kalisio/krawler:${KRAWLER_TAG}"
+        echo <> Building image ${IMAGE_NAME}:${IMAGE_TAG} using kalisio/krawler:${KRAWLER_TAG}
         docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
       deploy:
         provider: script

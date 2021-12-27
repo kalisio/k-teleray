@@ -24,7 +24,7 @@ jobs:
         IMAGE_NAME="$TRAVIS_REPO_SLUG"
         if [[ -z "$TRAVIS_TAG" ]]; then
           IMAGE_TAG=latest
-          KRAWLER_TAG=
+          KRAWLER_TAG=latest
         else
           IMAGE_TAG=$(node -p -e "require('./package.json').version")
           KRAWLER_TAG=$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")

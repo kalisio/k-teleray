@@ -30,7 +30,7 @@ jobs:
           KRAWLER_TAG=$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
         fi
         docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
-        echo <> Building image ${IMAGE_NAME}:${IMAGE_TAG} using kalisio/krawler:${KRAWLER_TAG}
+        echo <> Building image $IMAGE_NAME:$IMAGE_TAG using kalisio/krawler:$KRAWLER_TAG
         docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
         docker push $IMAGE_NAME:$IMAGE_TAG
 
@@ -39,15 +39,18 @@ jobs:
         - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash   
       script:
       - |
-        helm package -u helm -d helm/charts
+        git clone -b gh-pages https://github.com/$TRAVIS_REPO_SLUG gh-pages
+        mkfir -p pg-pages/charts
+        helm package -u helm -d gh-pages/charts
+        cd gh-pages/charts
+        helm repo index .
       deploy:
-        provider: pages  
+        provider: pages
         github_token: $GITHUB_TOKEN
-        local_dir: helm/charts
+        local_dir: gh-pages
         target_branch: gh-pages
         verbose: true
         skip_cleanup: true
-        keep_history: true
         on:
           all_branches: true
 

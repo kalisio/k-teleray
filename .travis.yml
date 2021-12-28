@@ -9,7 +9,7 @@ notifications:
 stages:
   - name: DOCKER
   - name: HELM
-    if: commit_message =~ /(chart|helm)/
+    if: commit_message =~ /[helm]/
 
 jobs:
   include:
@@ -51,7 +51,7 @@ jobs:
         AUTHOR_URL=$(node -p -e "require('./package.json').author.url")
         git clone -b gh-pages https://github.com/$TRAVIS_REPO_SLUG gh-pages
         mkdir -p pg-pages/charts
-        envsubst < helm/chart.yaml.tpl > helm/chart.yaml
+        envsubst < helm/Chart.yaml.tpl > helm/Chart.yaml
         helm lint helm 
         helm package -u helm -d gh-pages/charts
         cd gh-pages/charts

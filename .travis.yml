@@ -35,12 +35,23 @@ jobs:
         docker push $IMAGE_NAME:$IMAGE_TAG
 
     - stage: HELM
+      language: node_js
+      node_js:
+      - '12'
       before_install:
         - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash   
       script:
       - |
+        NAME=$(node -p -e "require('./package.json').name")
+        DESCRIPTION=$(node -p -e "require('./package.json').description")
+        HOMEPAGE=$(node -p -e "require('./package.json').homepage")
+        KEYWORDS=$(node -p -e "require('./package.json').keywords.join('-')")
+        AUTHOR_NAME=$(node -p -e "require('./package.json').author.name")
+        AUTHOR_EMAIL=$(node -p -e "require('./package.json').author.email")
+        AUTHOR_URL=$(node -p -e "require('./package.json').author.url")
         git clone -b gh-pages https://github.com/$TRAVIS_REPO_SLUG gh-pages
-        mkfir -p pg-pages/charts
+        mkdir -p pg-pages/charts
+        envsubst < helm/chart.yaml.tpl > helm/chart.yaml
         helm lint helm 
         helm package -u helm -d gh-pages/charts
         cd gh-pages/charts

@@ -3,7 +3,7 @@ name: teleray
 description: A Krawler based service to download data from the French gamma dose rate alert Teleray network
 annotations:
   category: KrawlerJob
-version: 0.1.0
+version: 1.0.0-alpha.1
 keywords:
   - Teleray
   - krawler

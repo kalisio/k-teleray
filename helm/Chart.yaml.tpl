@@ -5,7 +5,9 @@ appVersion: ${VERSION}
 annotations:
   category: KrawlerJob
 version: 1.0.0-alpha.1
-keywords: ${KEYWORDS}
+keywords:
+  - teleray
+  - krawler
 home: ${HOMEPAGE}
 maintainers:
   - name: ${AUTHOR_NAME}

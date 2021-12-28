@@ -46,7 +46,6 @@ jobs:
         export VERSION=$(node -p -e "require('./package.json').version")
         export DESCRIPTION=$(node -p -e "require('./package.json').description")
         export HOMEPAGE=$(node -p -e "require('./package.json').homepage")
-        export KEYWORDS=$(node -p -e "require('./package.json').keywords.join('-')")
         export AUTHOR_NAME=$(node -p -e "require('./package.json').author.name")
         export AUTHOR_EMAIL=$(node -p -e "require('./package.json').author.email")
         export AUTHOR_URL=$(node -p -e "require('./package.json').author.url")

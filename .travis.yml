@@ -42,16 +42,17 @@ jobs:
         - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash   
       script:
       - |
-        NAME=$(node -p -e "require('./package.json').name")
-        DESCRIPTION=$(node -p -e "require('./package.json').description")
-        HOMEPAGE=$(node -p -e "require('./package.json').homepage")
-        KEYWORDS=$(node -p -e "require('./package.json').keywords.join('-')")
-        AUTHOR_NAME=$(node -p -e "require('./package.json').author.name")
-        AUTHOR_EMAIL=$(node -p -e "require('./package.json').author.email")
-        AUTHOR_URL=$(node -p -e "require('./package.json').author.url")
+        export NAME=$(node -p -e "require('./package.json').name")
+        export DESCRIPTION=$(node -p -e "require('./package.json').description")
+        export HOMEPAGE=$(node -p -e "require('./package.json').homepage")
+        export KEYWORDS=$(node -p -e "require('./package.json').keywords.join('-')")
+        export AUTHOR_NAME=$(node -p -e "require('./package.json').author.name")
+        export AUTHOR_EMAIL=$(node -p -e "require('./package.json').author.email")
+        export AUTHOR_URL=$(node -p -e "require('./package.json').author.url")
         git clone -b gh-pages https://github.com/$TRAVIS_REPO_SLUG gh-pages
         mkdir -p pg-pages/charts
         envsubst < helm/Chart.yaml.tpl > helm/Chart.yaml
+        more helm/Chart.yaml
         helm lint helm 
         helm package -u helm -d gh-pages/charts
         cd gh-pages/charts

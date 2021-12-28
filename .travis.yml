@@ -43,6 +43,7 @@ jobs:
       script:
       - |
         export NAME=$(node -p -e "require('./package.json').name")
+        export VERSION=$(node -p -e "require('./package.json').version")
         export DESCRIPTION=$(node -p -e "require('./package.json').description")
         export HOMEPAGE=$(node -p -e "require('./package.json').homepage")
         export KEYWORDS=$(node -p -e "require('./package.json').keywords.join('-')")

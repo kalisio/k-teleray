@@ -1,0 +1,69 @@
+apiVersion: v1
+entries:
+  k-teleray:
+  - annotations:
+      category: KrawlerJob
+    apiVersion: v1
+    appVersion: 1.2.0
+    created: "2021-12-28T13:31:14.043481973Z"
+    description: A Krawler based service to download data from the French gamma dose
+      rate alert Teleray network
+    digest: 7c5ee24314bfdde4cc0c95a725c209d7229c826bb97d209d48f474d3a1488eca
+    home: https://github.com/kalisio/k-teleray
+    keywords:
+    - teleray
+    - krawler
+    maintainers:
+    - email: contact@kalisio.com
+      name: Kalisio
+      url: https://github.com/kalisio
+    name: k-teleray
+    urls:
+    - k-teleray-1.0.0-alpha.1.tgz
+    version: 1.0.0-alpha.1
+  teleray:
+  - annotations:
+      category: KrawlerJob
+    apiVersion: v1
+    created: "2021-12-28T13:31:14.044229355Z"
+    description: A Krawler based service to download data from the French gamma dose
+      rate alert Teleray network
+    digest: 975644c191890a448c80e75147b7948e5c4a299132e4b20bdf3c6fc9d86d2899
+    home: https://github.com/kalisio/k-teleray
+    keywords:
+    - Teleray
+    - krawler
+    maintainers:
+    - email: contact@kalisio.com
+      name: Kalisio
+      url: https://kalisio.com
+    name: teleray
+    sources:
+    - https://github.com/kalisio/k-teleray
+    - https://github.com/kalisio/krawler
+    urls:
+    - teleray-1.0.0-alpha.1.tgz
+    version: 1.0.0-alpha.1
+  - annotations:
+      category: KrawlerJob
+    apiVersion: v1
+    created: "2021-12-28T13:31:14.04372107Z"
+    description: A Krawler based service to download data from the French gamma dose
+      rate alert Teleray network
+    digest: 6e8ee13fcb4597759bce4704f700ab974642dbdce84a1d1f47cd7fa881016cf7
+    home: https://github.com/kalisio/k-teleray
+    keywords:
+    - Teleray
+    - krawler
+    maintainers:
+    - email: contact@kalisio.com
+      name: Kalisio
+      url: https://kalisio.com
+    name: teleray
+    sources:
+    - https://github.com/kalisio/k-teleray
+    - https://github.com/kalisio/krawler
+    urls:
+    - teleray-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-12-28T13:31:14.043095884Z"

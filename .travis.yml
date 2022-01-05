@@ -1,3 +1,8 @@
+language: node_js
+node_js:
+- '12'
+services:
+- docker
 notifications:
   email: false
   slack:
@@ -5,65 +10,21 @@ notifications:
       - secure: dMdsSjHqVO0jQ59taHdT7RjQq96z8MQMn7ZWhch7wOlA6D36A1qyM/I7IQoaXGGN2aJOStZKPxIVmBajZgcD7gT4VYzINub9zFxBk1NiT4quuxHZ5zPNA/c+1imUfyjVnhvA/u9YDVC91oEVGibVVbAwHJOH/xNH4iquyW3r5oYUNcrhy01p9mskyemR4bNMZzMfqdZtuwhMQa+6dGi7n4Ci0OFRdvLVOZMnjokl3c65wocwm29FOvXdzrtqGd/sQ1rz4izWRY+PAZowL/zUPUXYHyRi4QrGSieY+sy+WG3a/CMAIlxJZyMtmLGCrJgck96p/1VfufFKrgDQQiR3/ofCmZPeFyNSpiMbnBKIc9KplmrmL4uAVaiiP4ubUaij5AjBaa3gyx3OtLlxzPZb5XtqI/ZbWexXkYS92HHoMaysO3+LZWLJVigMQpPH3bTZLc5Cg7jS6h2ICmKLUwwZ7lWh6xUwVi7w0UvwesMujSLSsndYlIq671iDRlm98XmFi8fppU/bJ4yMXB8ihh5YXu1ZcMrTzwj6jWV/2jw6QzP/gBBibKbJZ4m2Vf3fEf6UXFgyFs4Axq4mTmS1kep0OcJoukiIpfecRc8pY+ANSd9mUkBrMEv+Ei/pYPzLsg/ZrO/JDfsmJ4EL1ifPcCeq47iv2zdbjR3WgJ8zxhrS2VM=
     on_success: always
     on_failure: always  
-
-stages:
-  - name: DOCKER
-  - name: HELM
-    if: commit_message =~ /[helm]/
-
-jobs:
-  include:
-    - stage: DOCKER
-      language: node_js
-      node_js:
-      - '12'
-      services:
-      - docker
-      script:
-      - |
-        IMAGE_NAME="$TRAVIS_REPO_SLUG"
-        if [[ -z "$TRAVIS_TAG" ]]; then
-          IMAGE_TAG=latest
-          KRAWLER_TAG=latest
-        else
-          IMAGE_TAG=$(node -p -e "require('./package.json').version")
-          KRAWLER_TAG=$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
-        fi
-        docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
-        echo <> Building image $IMAGE_NAME:$IMAGE_TAG using kalisio/krawler:$KRAWLER_TAG
-        docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
-        docker push $IMAGE_NAME:$IMAGE_TAG
-
-    - stage: HELM
-      language: node_js
-      node_js:
-      - '12'
-      before_install:
-        - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash   
-      script:
-      - |
-        export NAME=$(node -p -e "require('./package.json').name")
-        export VERSION=$(node -p -e "require('./package.json').version")
-        export DESCRIPTION=$(node -p -e "require('./package.json').description")
-        export HOMEPAGE=$(node -p -e "require('./package.json').homepage")
-        export AUTHOR_NAME=$(node -p -e "require('./package.json').author.name")
-        export AUTHOR_EMAIL=$(node -p -e "require('./package.json').author.email")
-        export AUTHOR_URL=$(node -p -e "require('./package.json').author.url")
-        git clone -b gh-pages https://github.com/$TRAVIS_REPO_SLUG gh-pages
-        mkdir -p pg-pages/charts
-        envsubst < helm/Chart.yaml.tpl > helm/Chart.yaml
-        more helm/Chart.yaml
-        helm lint helm 
-        helm package -u helm -d gh-pages/charts
-        cd gh-pages/charts
-        helm repo index .
-      deploy:
-        provider: pages
-        github_token: $GITHUB_TOKEN
-        local_dir: gh-pages
-        target_branch: gh-pages
-        verbose: true
-        skip_cleanup: true
-        on:
-          all_branches: true
-
+script:
+- |
+  IMAGE_NAME="$TRAVIS_REPO_SLUG"
+  if [[ -z "$TRAVIS_TAG" ]]; then
+    IMAGE_TAG=latest
+    KRAWLER_TAG=latest
+  else
+    IMAGE_TAG=$(node -p -e "require('./package.json').version")
+    KRAWLER_TAG=$(node -p -e "require('./package.json').peerDependencies['@kalisio/krawler']")
+  fi
+  docker build --build-arg KRAWLER_TAG=$KRAWLER_TAG -f dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
+before_deploy:
+- docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD"
+deploy:
+  provider: script
+  script: docker push $IMAGE_NAME:$IMAGE_TAG
+  on:
+    all_branches: true

@@ -3,6 +3,7 @@
   "description": "A Krawler based service to download data from the French gamma dose rate alert Teleray network",
   "version": "1.2.0",
   "homepage": "https://github.com/kalisio/k-teleray",
+  "type": "module",
   "keywords": [
     "krawler",
     "kargo",
@@ -31,11 +32,13 @@
     "release:patch": "npm run changelog -- -p && git add CHANGELOG.md && git commit -m \"chore: Updated CHANGELOG.md [skip ci]\" && git push && npm version --force patch",
     "postversion": "git push origin --tags"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
   "devDependencies": {
     "generate-changelog": "^1.8.0"
   },
   "peerDependencies": {
-    "@kalisio/krawler": "1.1.0"
+    "@kalisio/krawler": "2.0.0"
   }
 }

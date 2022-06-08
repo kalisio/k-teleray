@@ -21,8 +21,6 @@ RUN yarn link && yarn link @kalisio/krawler
 # Required as yarn does not seem to set it correctly
 RUN chmod u+x /usr/local/bin/krawler
 
-ENV NODE_PATH=/opt/krawler/node_modules
-
 # Install the job
 COPY jobfile.js .
 
@@ -30,4 +28,5 @@ COPY jobfile.js .
 HEALTHCHECK --interval=1m --timeout=10s --start-period=1m CMD node /opt/krawler/healthcheck.js
 
 # Run the job
+ENV NODE_PATH=/opt/krawler/node_modules
 CMD krawler --cron "$CRON" --run jobfile.js

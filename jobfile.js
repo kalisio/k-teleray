@@ -1,4 +1,4 @@
-import _ from 'lodash/lodash.js'
+import _ from 'lodash'
 
 const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/teleray'
 const ttl = +process.env.TTL || (7 * 24 * 60 * 60)  // duration in seconds

@@ -88,7 +88,7 @@ export default {
     },
     jobs: {
       before: {
-        createStores: [{ id: 'memory' }],
+        createStores: { id: 'memory' },
         connectMongo: {
           url: dbUrl,
           // Required so that client is forwarded from job to tasks

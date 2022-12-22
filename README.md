@@ -8,8 +8,8 @@ A [Krawler](https://kalisio.github.io/krawler/) based service to download data f
 ## Description
 
 The **k-teleray** job allow to scrape gamma dose rate measurements from the following url: [http://teleray.irsn.fr//TelerayService/service/measure](http://teleray.irsn.fr//TelerayService/service/measure)`. The downloaded data are stored within a [MongoDB](https://www.mongodb.com/) database and more precisely in 2 collections:
-* the `measurements` collection stores the measurement data 
-* the `sensors` collection stores the sensor positions
+* the `teleray-measurements` collection stores the measurement data 
+* the `teleray-sensors` collection stores the sensor positions
 
 All records are stored in [GeoJson](https://fr.wikipedia.org/wiki/GeoJSON) format.
 

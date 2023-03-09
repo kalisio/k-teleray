@@ -1,3 +1,15 @@
+### 1.3.0 (2023-03-09)
+
+##### New Features
+
+*  Upgrade NodeJS to v16 and krawler to latest version (closes [#14](https://github.com/kalisio/k-teleray/pull/14)) BREAKING CHANGE: moved to ECMAScript modules ([5b88d428](https://github.com/kalisio/k-teleray/commit/5b88d428349bcb1d53f0311eb14fd9aacba1599a))
+*  adding a helm chart. ([9c11b10d](https://github.com/kalisio/k-teleray/commit/9c11b10d25ed913fbc9af361f378b69df83ac115))
+
+##### Other Changes
+
+*  fixing helm install in CI. ([65b30f9d](https://github.com/kalisio/k-teleray/commit/65b30f9dfd133a0c09d9d756c9fb701cb6562196))
+*  updated npm release script ([770d8309](https://github.com/kalisio/k-teleray/commit/770d8309bccaa66d09195fe264c71cc842b5b0ef))
+
 ### 1.2.0 (2020-10-01)
 
 ##### New Features

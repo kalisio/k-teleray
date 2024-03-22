@@ -16,10 +16,6 @@ init_github_build() {
     install_reqs age sops nvm node16
 }
 
-init_github_main_ci() {
-    install_reqs age sops nvm node16 node18 mongo4
-}
-
 begin_group "Init $CI_ID for $JOB_ID"
 
 init_"${CI_ID}_${JOB_ID}"

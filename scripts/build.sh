@@ -31,7 +31,7 @@ done
 ##
 
 WORKSPACE_DIR="$(dirname "$ROOT_DIR")"
-init_job_infos "$ROOT_DIR" "$WORKSPACE_DIR/development/workspaces/jobs"
+init_job_infos "$ROOT_DIR"
 
 JOB=$(get_job_name)
 VERSION=$(get_job_version)

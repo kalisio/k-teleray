@@ -11,6 +11,9 @@ ROOT_DIR=$(dirname "$THIS_DIR")
 ## Parse options
 ##
 
+WORKSPACE_BRANCH=
+WORKSPACE_TAG=
+
 begin_group "Setting up workspace ..."
 
 if [ "$CI" = true ]; then
@@ -33,9 +36,9 @@ else
     DEVELOPMENT_REPO_URL="$GITHUB_URL/kalisio/development.git"
 
     # Clone project in the workspace
-    git_shallow_clone "$GITHUB_URL/kalisio/k-teleray.git" "$WORKSPACE_DIR/k-icos" "${WORKSPACE_TAG:-${WORKSPACE_BRANCH:-}}"
+    git_shallow_clone "$GITHUB_URL/kalisio/k-teleray.git" "$WORKSPACE_DIR/k-teleray" "${WORKSPACE_TAG:-${WORKSPACE_BRANCH:-}}"
 fi
 
-setup_job_workspace "$WORKSPACE_DIR" "$DEVELOPMENT_REPO_URL"
+setup_lib_workspace "$WORKSPACE_DIR" "$DEVELOPMENT_REPO_URL"
 
 end_group "Setting up workspace ..."

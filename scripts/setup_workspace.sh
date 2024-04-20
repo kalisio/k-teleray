@@ -8,12 +8,6 @@ ROOT_DIR=$(dirname "$THIS_DIR")
 
 . "$THIS_DIR/kash/kash.sh"
 
-## Parse options
-##
-
-WORKSPACE_BRANCH=
-WORKSPACE_TAG=
-
 begin_group "Setting up workspace ..."
 
 if [ "$CI" = true ]; then
@@ -39,6 +33,6 @@ else
     git_shallow_clone "$GITHUB_URL/kalisio/k-teleray.git" "$WORKSPACE_DIR/k-teleray" "${WORKSPACE_TAG:-${WORKSPACE_BRANCH:-}}"
 fi
 
-setup_lib_workspace "$WORKSPACE_DIR" "$DEVELOPMENT_REPO_URL"
+setup_job_workspace "$WORKSPACE_DIR" "$DEVELOPMENT_REPO_URL"
 
 end_group "Setting up workspace ..."

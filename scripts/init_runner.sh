@@ -6,14 +6,13 @@ JOB_ID=$1
 
 THIS_FILE=$(readlink -f "${BASH_SOURCE[0]}")
 THIS_DIR=$(dirname "$THIS_FILE")
-# ROOT_DIR=$(dirname "$THIS_DIR")
 
 . "$THIS_DIR/kash/kash.sh"
 
 ### Github Actions
 
 init_github_build() {
-    install_reqs age sops nvm node16
+    install_reqs age sops
 }
 
 begin_group "Init $CI_ID for $JOB_ID"

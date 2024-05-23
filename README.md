@@ -1,7 +1,10 @@
 # k-teleray
 
 [![Latest Release](https://img.shields.io/github/v/tag/kalisio/k-teleray?sort=semver&label=latest)](https://github.com/kalisio/k-teleray/releases)
-[![Build Status](https://github.com/kalisio/k-teleray/actions/workflows/main.yaml/badge.svg)](https://github.com/kalisio/k-teleray/actions/workflows/main.yaml)
+[![CI](https://github.com/kalisio/k-teleray/actions/workflows/main.yaml/badge.svg)](https://github.com/kalisio/k-teleray/actions/workflows/main.yaml)
+[![Code Climate](https://codeclimate.com/github/kalisio/k-teleray/badges/gpa.svg)](https://codeclimate.com/github/kalisio/k-teleray)
+[![Test Coverage](https://codeclimate.com/github/kalisio/k-teleray/badges/coverage.svg)](https://codeclimate.com/github/kalisio/k-teleray/coverage)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A [Krawler](https://kalisio.github.io/krawler/) based service to download data from the French gamma dose rate alert [Teleray](http://teleray.irsn.fr/aide.htm) network.
 

@@ -23,6 +23,8 @@ The job is executed according a specific cron expression. By default, every 10 m
 | Variable | Description |
 |--- | --- |
 | `DB_URL` | The mongoDB database URL. The default value is `mongodb://127.0.0.1:27017/teleray` |
+| `STATIONS_COLLECTION` | The name of the MongoDB collection for stations positions. The default value is `teleray-sensors` |
+| `MEASURES_COLLECTION` | The name of the MongoDB collection for measures data. The default value is `teleray-measurements` |
 | `TTL` | The observations data time to live. It must be expressed in seconds and the default value is `604 800` (7 days) | 
 | `DEBUG` | Enables debug output. Set it to `krawler*` to enable full output. By default it is undefined. |
 

@@ -1,6 +1,8 @@
 import _ from 'lodash'
 
 const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/teleray'
+const stationsCollection = process.env.STATIONS_COLLECTION || 'teleray-sensors'
+const measuresCollection = process.env.MEASURES_COLLECTION || 'teleray-measurements'
 const ttl = +process.env.TTL || (7 * 24 * 60 * 60)  // duration in seconds
 
 export default {
@@ -21,7 +23,7 @@ export default {
       before: {
         createMongoAggregation: {
           dataPath: 'data.mostRecentMeasurement',
-          collection: 'teleray-measurements',
+          collection: measuresCollection,
           pipeline: [
             { $sort: { 'properties.irsnId': 1, time: 1 } },
             {
@@ -57,7 +59,7 @@ export default {
         },
         writeMeasurements: {
           hook: 'writeMongoCollection',
-          collection: 'teleray-measurements',
+          collection: measuresCollection,
           transform: {
             mapping: { 'properties.measureDate': 'time' },
             omit: [ 'properties.location' ],
@@ -67,7 +69,7 @@ export default {
         },
         updateSensors: {
           hook: 'updateMongoCollection',
-          collection: 'teleray-sensors',
+          collection: stationsCollection,
           filter: { 'properties.irsnId': '<%= properties.irsnId %>' },
           upsert : true,
           transform: {
@@ -97,7 +99,7 @@ export default {
         createSensorsCollection: {
           hook: 'createMongoCollection',
           clientPath: 'taskTemplate.client',
-          collection: 'teleray-sensors',
+          collection: stationsCollection,
           indices: [
             [{ 'properties.irsnId': 1 }, { unique: true }],
             { geometry: '2dsphere' }                                                                                                              
@@ -106,7 +108,7 @@ export default {
         createMeasurementsCollection: {
           hook: 'createMongoCollection',
           clientPath: 'taskTemplate.client',
-          collection: 'teleray-measurements',
+          collection: measuresCollection,
           indices: [
             [{ time: 1, 'properties.irsnId': 1 }, { unique: true }],
             { 'properties.value': 1 },

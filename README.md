@@ -4,13 +4,13 @@
 [![CI](https://github.com/kalisio/k-teleray/actions/workflows/main.yaml/badge.svg)](https://github.com/kalisio/k-teleray/actions/workflows/main.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A [Krawler](https://kalisio.github.io/krawler/) based service to download data from the French gamma dose rate alert [Teleray](http://teleray.irsn.fr/aide.htm) network.
+A [Krawler](https://kalisio.github.io/krawler/) based service to download data from the French gamma dose rate alert [Teleray](https://doc.teleray.asnr.fr/documentation/api/api-teleray.html) network.
 
 ## Description
 
-The **k-teleray** job allow to scrape gamma dose rate measurements from the following url: [http://teleray.irsn.fr//TelerayService/service/measure](http://teleray.irsn.fr//TelerayService/service/measure)`. The downloaded data are stored within a [MongoDB](https://www.mongodb.com/) database and more precisely in 2 collections:
-* the `teleray-measurements` collection stores the measurement data 
-* the `teleray-sensors` collection stores the sensor positions
+The **k-teleray** job allow to scrape gamma dose rate measurements from the following url: [https://api.teleray.asnr.fr/wfs/collections/measures/items](https://api.teleray.asnr.fr/wfs/collections/measures/items). The downloaded data are stored within a [MongoDB](https://www.mongodb.com/) database and more precisely in 2 collections:
+* the `teleray-measures` collection stores the measurement data 
+* the `teleray-stations` collection stores the station positions
 
 All records are stored in [GeoJson](https://fr.wikipedia.org/wiki/GeoJSON) format.
 
@@ -20,9 +20,9 @@ The job is executed according a specific cron expression. By default, every 10 m
 
 | Variable | Description |
 |--- | --- |
-| `DB_URL` | The mongoDB database URL. The default value is `mongodb://127.0.0.1:27017/teleray` |
-| `STATIONS_COLLECTION` | The name of the MongoDB collection for stations positions. The default value is `teleray-sensors` |
-| `MEASURES_COLLECTION` | The name of the MongoDB collection for measures data. The default value is `teleray-measurements` |
+| `DB_URL` | The mongoDB database URL. The default value is `mongodb://127.0.0.1:27017/k-teleray` |
+| `STATIONS_COLLECTION` | The name of the MongoDB collection for stations positions. The default value is `teleray-stations` |
+| `MEASURES_COLLECTION` | The name of the MongoDB collection for measures data. The default value is `teleray-measures` |
 | `TTL` | The observations data time to live. It must be expressed in seconds and the default value is `604 800` (7 days) | 
 | `DEBUG` | Enables debug output. Set it to `krawler*` to enable full output. By default it is undefined. |
 

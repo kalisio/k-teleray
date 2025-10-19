@@ -32,10 +32,11 @@
     "postversion": "git push origin HEAD --tags"
   },
   "dependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "winston": "^3.13.0"
   },
   "devDependencies": {},
   "peerDependencies": {
-    "@kalisio/krawler": "2.6.0"
+    "@kalisio/krawler": "2.8.1"
   }
 }
